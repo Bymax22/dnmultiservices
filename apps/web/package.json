@@ -42,6 +42,7 @@
     "next-cloudinary": "^6.16.0",
     "nodemailer": "^7.0.0",
     "pg": "^8.14.1",
+    "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-countup": "^6.5.3",
     "react-dom": "^19.0.0",
@@ -49,6 +50,7 @@
     "react-icons": "^5.5.0",
     "react-responsive-carousel": "^3.2.23",
     "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.175.0",
     "validator": "^13.15.0",
@@ -65,8 +67,6 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^3.4.17",
     "typescript": "^5"
   }
 }
