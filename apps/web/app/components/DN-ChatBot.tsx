@@ -21,8 +21,12 @@ import {
   HelpCircle,
   ChevronRight,
   AlertCircle,
-  Download,
-  FileText
+  FileText,
+  Building,
+  Cpu,
+  Shield,
+  CheckCircle,
+  ExternalLink
 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -47,7 +51,7 @@ export default function DNChatBot() {
     {
       id: '1',
       role: 'assistant',
-      content: "**Welcome to DN Multi Services Supply Ltd!**\n\nI'm your DN Assistant. I can help you with:\n\n- Engineering & Construction\n- Energy & Solar Solutions\n- Water Systems & Boreholes\n- Petroleum Supply\n- Mining Support Services\n- Cross-border Logistics\n\n*Operating in DR Congo and Zambia with QHSE certification.*\n\nHow can I assist you today?",
+      content: "Welcome to DN Multi Services Supply Ltd. I'm your assistant here to help with industrial services in DR Congo and Zambia. How can I assist you today?",
       timestamp: new Date()
     }
   ]);
@@ -56,374 +60,154 @@ export default function DNChatBot() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Enhanced Service Categories with more questions
+  // Service Categories
   const serviceCategories: ServiceCategory[] = [
     {
       id: 1,
-      name: 'Engineering & Construction',
+      name: 'Engineering',
       icon: <HardHat className="w-4 h-4" />,
       questions: [
-        "What construction services do you offer?",
-        "Do you do earth works and excavation?",
-        "Are you QHSE certified?",
-        "Can you work on mining site construction?"
+        "Construction services?",
+        "Earth works available?",
+        "Safety standards?",
+        "Mining site construction?"
       ]
     },
     {
       id: 2,
-      name: 'Energy Solutions',
+      name: 'Energy',
       icon: <Zap className="w-4 h-4" />,
       questions: [
-        "Do you install solar systems for industrial use?",
-        "What solar equipment brands do you supply?",
-        "Solar-powered water pumping systems?",
-        "Industrial electrical installations?"
+        "Solar installations?",
+        "Solar equipment supply?",
+        "Industrial electrical?",
+        "Water pumping systems?"
       ]
     },
     {
       id: 3,
-      name: 'Water Systems',
+      name: 'Water',
       icon: <Droplets className="w-4 h-4" />,
       questions: [
-        "What's your borehole drilling process?",
-        "Do you supply and install HDPE pipes?",
-        "Water reticulation system design?",
-        "What HDPE pipe specifications do you have?"
+        "Borehole drilling?",
+        "HDPE pipes supply?",
+        "Water system design?",
+        "Pipe specifications?"
       ]
     },
     {
       id: 4,
-      name: 'Petroleum Supply',
+      name: 'Petroleum',
       icon: <Factory className="w-4 h-4" />,
       questions: [
-        "Do you supply fuel to remote mining sites?",
-        "What petroleum products do you supply?",
-        "Bulk fuel transportation capacity?",
-        "Are you licensed for hazardous materials?"
+        "Fuel supply to mines?",
+        "Bulk transportation?",
+        "Regulatory compliance?",
+        "Emergency fuel supply?"
       ]
     },
     {
       id: 5,
-      name: 'Mining Support',
+      name: 'Mining',
       icon: <Wrench className="w-4 h-4" />,
       questions: [
-        "What mining consumables do you supply?",
-        "Do you transport copper and minerals?",
-        "Industrial acid and sulphur supply?",
-        "Heavy machinery for mining operations?"
+        "Mining consumables?",
+        "Copper transportation?",
+        "Industrial acids?",
+        "Heavy equipment?"
       ]
     },
     {
       id: 6,
-      name: 'Logistics & Transport',
+      name: 'Logistics',
       icon: <Truck className="w-4 h-4" />,
       questions: [
-        "DRC-Zambia cross-border logistics?",
-        "Bulk material transportation?",
-        "Hazardous materials handling?",
-        "Equipment transportation services?"
+        "Cross-border logistics?",
+        "Bulk transportation?",
+        "Customs clearance?",
+        "Equipment transport?"
       ]
     }
   ];
 
-  // WhatsApp contacts with proper formatting
+  // WhatsApp contacts
   const whatsappContacts = [
     {
       country: 'DR Congo',
       phone: '243972329000',
-      flag: '',
-      message: 'Hello DN Multi Services, I need assistance with:'
+      icon: <MapPin className="w-4 h-4" />,
+      color: 'bg-blue-600'
     },
     {
       country: 'Zambia',
       phone: '260951864994',
-      flag: '',
-      message: 'Hello DN Multi Services, I need assistance with:'
+      icon: <MapPin className="w-4 h-4" />,
+      color: 'bg-blue-700'
     }
   ];
 
-  // Enhanced local knowledge base
-  const localKnowledge = {
-    // Company Information
-    company: {
-      overview: "**DN Multi Services Supply Ltd** is a cross-border industrial services company operating in **DR Congo** and **Zambia**. We specialize in mining support, engineering, energy solutions, logistics, and industrial supplies with a strong focus on safety, quality, and operational efficiency.",
-      history: "Established in 2014, we have grown to become a trusted partner for major industrial projects across the Central African region, with headquarters strategically located to serve both DRC and Zambia markets.",
-      certifications: "✅ QHSE Certified\n✅ ISO Standards Compliance\n✅ Licensed for Hazardous Materials\n✅ Registered in both DRC & Zambia\n✅ Insured Operations"
-    },
-    
-    // Services Details
-    services: {
-      engineering: `**Engineering & Construction Services:**
-• Civil Engineering & Building Construction
-• Earth Works (Excavation, Trenching, Grading)
-• Mining Infrastructure Development
-• Industrial Plant Construction
-• Safety-compliant Project Execution
-
-*Standards:* ISO 9001, Local Building Codes
-*Capacity:* Projects up to $5M value
-*Location:* DRC & Zambia operations`,
-
-      energy: `**Energy & Electrical Solutions:**
-• Commercial/Industrial Solar Systems
-• Solar-powered Water Pumping
-• Electrical Installations & Maintenance
-• Generator Systems
-• Energy Storage Solutions
-
-*Equipment:* Tier 1 solar panels, quality inverters
-*Capacity:* 1kW to 1MW systems
-*Warranty:* 25-year panel warranty`,
-
-      water: `**Water Systems & Infrastructure:**
-• Borehole Drilling (100m-300m depth)
-• HDPE Piping Systems (PE100 Material)
-• Water Reticulation Networks
-• Pump Installation & Maintenance
-• Storage Tank Systems
-
-*HDPE Specifications:*
-- PE100 Material Grade
-- SDR 11 & 17 Available
-- PN 10 & 16 Pressure Ratings
-- UV Stabilized, Corrosion Resistant
-- 50+ Year Lifespan`,
-
-      petroleum: `**Petroleum Supply Services:**
-• Diesel & Petrol Supply for Mining
-• Bulk Fuel Transportation
-• Lubricants & Industrial Oils
-• Aviation Fuel (Where Licensed)
-• Emergency Fuel Supply
-
-*Capacity:* 10,000 to 100,000 liters
-*Transport:* ISO Tankers & Bowser Trucks
-*Compliance:* Full DRC & Zambia Regulations`,
-
-      mining: `**Mining Support Services:**
-• Mining Consumables Supply
-• Copper & Mineral Transportation
-• Industrial Acids (Sulphuric, Hydrochloric)
-• Coal Supply for Processing
-• Heavy Equipment Rental/Sale
-
-*Acids:* Sulphuric, Hydrochloric, Nitric
-*Transport:* Bulk Tankers, Secure Logistics
-*Safety:* MSDS Compliant Handling`,
-
-      logistics: `**Logistics & Transportation:**
-• DRC-Zambia Cross-border Logistics
-• Bulk Material Transportation
-• Heavy Machinery Transport
-• Hazardous Materials Handling
-• Customs Clearance Support
-
-*Fleet:* 10-ton to 40-ton Capacity
-*Border:* Lubumbashi-Kasumbalesa Route
-*Insurance:* Full Cargo Coverage`,
-
-      machinery: `**Heavy Machinery Supply:**
-• Excavators & Bulldozers
-• Mining Support Equipment
-• Agricultural Machinery
-• Generator Sets
-• Spare Parts Supply
-
-*Brands:* Caterpillar, Komatsu, Hitachi
-*Condition:* New & Certified Used
-*Support:* Maintenance & Training`,
-
-      hdpe: `**HDPE Pipe Specifications:**
-• **Material:** PE100 High-Density Polyethylene
-• **Standards:** ISO 4427, SANS 10262
-• **Sizes:** 20mm to 630mm Diameter
-• **Pressure Classes:** PN10, PN12.5, PN16
-• **SDR Ratings:** SDR11, SDR13.6, SDR17
-
-**Applications:**
-- Mining Slurry Transportation
-- Potable Water Systems
-- Industrial Chemical Transport
-- Irrigation Systems
-- Municipal Water Networks
-
-**Key Features:**
-✓ Corrosion Resistant
-✓ Chemical Resistant
-✓ UV Stabilized
-✓ Low Maintenance
-✓ 50+ Year Lifespan
-✓ Leak-free Joints (Butt Welding)`
-    },
-    
-    // Contact Information
-        contacts: {
-      zambia: `**ZAMBIA OFFICE:**
-    **Address:** 1st Street, House No. 3, Nkana West, Kitwe
-    **Phone:** +260 770 970 511 / +260 979 130 958
-    **WhatsApp:** +260 951 864 994
-    **Email:** info@dnmultiservices.com
-    **Hours:** Mon-Fri 8:00-17:00, Sat 8:00-13:00
-
-    **Services in Zambia:**
-    • Copperbelt Mining Support
-    • Industrial Supply Chain
-    • Construction Projects
-    • Energy Solutions`,
-
-      drc: `**DR CONGO OFFICE:**
-    **Address:** No. 534, Avenue Kilela Balanda, Quartier Makutano, Lubumbashi
-    **Phone:** +243 97 232 9000 / +243 85 466 7976
-    **WhatsApp:** +243 972 329 000
-    **Email:** info@dnmultiservices.com
-    **Hours:** Mon-Fri 8:00-17:00, Sat 8:00-13:00
-
-    **Services in DRC:**
-    • Katanga Mining Operations
-    • Cross-border Logistics
-    • Industrial Equipment Supply
-    • Infrastructure Projects`,
-
-      emergency: `**EMERGENCY CONTACTS:**
-    For urgent service requirements:
-
-    **24/7 Emergency Line:** +243 972 329 000
-    **After Hours Support:** +260 951 864 994
-
-    **Emergency Services:**
-    • Fuel Supply Interruptions
-    • Critical Equipment Breakdown
-    • Safety Incidents
-    • Urgent Logistics Requirements`
-        },
-    
-    // Pricing & Quotation
-    pricing: `**QUOTATION PROCESS:**
-To provide an accurate quote, we need:
-
-1. **Project Location:** DRC or Zambia
-2. **Service Required:** Specific service category
-3. **Project Scale:** Quantity/Volume/Size
-4. **Timeline:** Start date & duration
-5. **Site Conditions:** Accessibility, power, etc.
-
-**Request Methods:**
-1. **Website Form:** www.dnmultiservices.com/contact
-2. **Email:** info@dnmultiservices.com
-3. **WhatsApp:** +243 972 329 000 / +260 951 864 994
-
-**Response Time:** 24-48 hours for detailed quotes`,
-
-    // Common Questions
-    faqs: {
-      delivery: "**Delivery Timeline:**\n• DRC: 3-7 days depending on location\n• Zambia: 2-5 days within Copperbelt\n• Cross-border: 5-10 days with customs\n• Urgent: 24-48 hours (surcharge applicable)",
-      payment: "**Payment Terms:**\n• 50% advance, 50% on delivery for new clients\n• Net 30 days for approved accounts\n• Bank transfer, SWIFT, or local bank\n• USD, ZMW, or CDF accepted",
-      warranty: "**Warranty & Support:**\n• Equipment: 1-year warranty\n• Installation: 6-month workmanship warranty\n• HDPE Pipes: 10-year material warranty\n• 24/7 technical support available",
-      compliance: "**Regulatory Compliance:**\n• Fully licensed in DRC & Zambia\n• QHSE certified operations\n• Environmental impact assessments\n• Tax compliant in both jurisdictions"
-    }
-  };
-
-  // Function to get intelligent response
+  // Local knowledge responses
   const getLocalResponse = (userMessage: string): string => {
     const msg = userMessage.toLowerCase().trim();
     
     // Greetings
-    if (/hello|hi|hey|good morning|good afternoon/.test(msg)) {
-      const greetings = [
-        "Hello! Welcome to DN Multi Services Supply Ltd. How can I assist with your industrial service needs today?",
-        "Hi there! I'm DN Assistant. Are you looking for engineering, energy, or mining support services in DRC or Zambia?",
-        "Greetings! DN Multi Services here. We provide cross-border industrial solutions. What can I help you with?"
-      ];
-      return greetings[Math.floor(Math.random() * greetings.length)];
+    if (/hello|hi|hey/.test(msg)) {
+      return "Hello! I'm DN Assistant from DN Multi Services Supply Ltd. We provide industrial services across DR Congo and Zambia. How can I help you today?";
     }
 
-    // Company information
-    if (/company|about|who are you|background/.test(msg)) {
-      return `${localKnowledge.company.overview}\n\n${localKnowledge.company.history}\n\n${localKnowledge.company.certifications}`;
+    // Company info
+    if (/company|about|who are you/.test(msg)) {
+      return "DN Multi Services Supply Ltd is a cross-border industrial services company operating in DR Congo and Zambia since 2014. We specialize in mining support, engineering, energy solutions, and industrial supplies with QHSE certification.";
     }
 
-    // Service-specific queries
-    if (/engineering|construction|building|civil/.test(msg)) {
-      return localKnowledge.services.engineering;
+    // Services
+    if (/engineering|construction/.test(msg)) {
+      return "We provide engineering and construction services including civil works, earth moving, mining infrastructure, and industrial building construction. All projects follow strict safety standards with QHSE compliance.";
     }
-    if (/energy|solar|electrical|power/.test(msg)) {
-      return localKnowledge.services.energy;
+    
+    if (/energy|solar|power/.test(msg)) {
+      return "We offer energy solutions including commercial/industrial solar systems, solar-powered water pumping, electrical installations, and generator systems. We supply Tier 1 solar equipment with full installation services.";
     }
-    if (/water|borehole|piping|pipe|hdpe/.test(msg)) {
-      if (msg.includes('hdpe') || msg.includes('pipe') || msg.includes('spec')) {
-        return localKnowledge.services.hdpe;
+    
+    if (/water|borehole|pipe|hdpe/.test(msg)) {
+      return "Our water services include borehole drilling, HDPE piping systems (PE100 material), water reticulation networks, and pump installations. We supply HDPE pipes in SDR 11/17, PN 10/16 specifications.";
+    }
+    
+    if (/petroleum|fuel|diesel/.test(msg)) {
+      return "We supply petroleum products to mining and industrial sites, including bulk diesel transportation, lubricants, and emergency fuel supply. Fully compliant with DRC and Zambia regulations.";
+    }
+    
+    if (/mining|copper|acid/.test(msg)) {
+      return "We provide mining support including consumables supply, copper transportation, industrial acids (sulphuric, hydrochloric), coal supply, and heavy equipment. All materials handled with proper safety protocols.";
+    }
+    
+    if (/logistics|transport|shipping/.test(msg)) {
+      return "We handle cross-border logistics between DRC and Zambia, bulk material transportation, heavy machinery transport, and customs clearance. Our fleet includes 10-ton to 40-ton capacity vehicles.";
+    }
+
+    // Contacts
+    if (/contact|phone|address|where/.test(msg)) {
+      if (msg.includes('zambia')) {
+        return "Zambia Office:\nAddress: 1st Street, House No. 3, Nkana West, Kitwe\nPhone: +260 770 970 511\nWhatsApp: +260 951 864 994\nEmail: info@dnmultiservices.com";
       }
-      return localKnowledge.services.water;
-    }
-    if (/petroleum|fuel|diesel|gasoline/.test(msg)) {
-      return localKnowledge.services.petroleum;
-    }
-    if (/mining|copper|acid|sulphur|coal/.test(msg)) {
-      return localKnowledge.services.mining;
-    }
-    if (/logistics|transport|shipping|delivery/.test(msg)) {
-      return localKnowledge.services.logistics;
-    }
-    if (/machinery|equipment|excavator|truck/.test(msg)) {
-      return localKnowledge.services.machinery;
+      if (msg.includes('drc') || msg.includes('congo')) {
+        return "DR Congo Office:\nAddress: No. 534, Avenue Kilela Balanda, Lubumbashi\nPhone: +243 97 232 9000\nWhatsApp: +243 972 329 000\nEmail: info@dnmultiservices.com";
+      }
+      return "Contact Information:\n\nZambia: +260 770 970 511\nDR Congo: +243 97 232 9000\nWhatsApp DRC: +243 972 329 000\nWhatsApp Zambia: +260 951 864 994\nEmail: info@dnmultiservices.com";
     }
 
-    // Location queries
-    if (/zambia|kitwe|copperbelt/.test(msg) && !/drc|congo|lubumbashi/.test(msg)) {
-      return localKnowledge.contacts.zambia;
-    }
-    if (/drc|congo|lubumbashi|katanga/.test(msg)) {
-      return localKnowledge.contacts.drc;
-    }
-    if (/contact|phone|address|email|where/.test(msg)) {
-      return `${localKnowledge.contacts.zambia}\n\n${localKnowledge.contacts.drc}\n\n${localKnowledge.contacts.emergency}`;
-    }
-    if (/emergency|urgent|immediate|asap/.test(msg)) {
-      return localKnowledge.contacts.emergency;
-    }
-
-    // Pricing & Quotation
-    if (/price|cost|quote|quotation|how much/.test(msg)) {
-      return localKnowledge.pricing;
-    }
-
-    // FAQs
-    if (/delivery|time|when|schedule/.test(msg)) {
-      return localKnowledge.faqs.delivery;
-    }
-    if (/payment|terms|bank|transfer/.test(msg)) {
-      return localKnowledge.faqs.payment;
-    }
-    if (/warranty|guarantee|support/.test(msg)) {
-      return localKnowledge.faqs.warranty;
-    }
-    if (/compliance|license|certified|regulation/.test(msg)) {
-      return localKnowledge.faqs.compliance;
+    // Pricing
+    if (/price|cost|quote|how much/.test(msg)) {
+      return "For pricing and quotations, please provide:\n1. Service required\n2. Project location\n3. Quantity/volume needed\n4. Timeline\n\nYou can also contact us directly for immediate quotes via WhatsApp or email.";
     }
 
     // WhatsApp
-    if (/whatsapp|chat|message|text/.test(msg)) {
-      return `**WhatsApp Contacts:**\n\nDR Congo: +243 972 329 000\nZambia: +260 951 864 994\n\n*We respond within 15 minutes during business hours (8:00-17:00).*\n\nSimply click the WhatsApp buttons below to start a conversation!`;
+    if (/whatsapp|chat|message/.test(msg)) {
+      return "You can reach us on WhatsApp:\nDR Congo: +243 972 329 000\nZambia: +260 951 864 994\n\nWe respond quickly during business hours (8:00-17:00).";
     }
 
-    // Website
-    if (/website|site|online|www/.test(msg)) {
-      return `**Our Website:** www.dnmultiservices.com\n\n**Features:**\n• Service Details & Specifications\n• Company Profile Download\n• Contact Forms\n• Project Portfolio\n• Certificates & Licenses\n\nVisit our site for comprehensive information and downloadable resources.`;
-    }
-
-    // Services list
-    if (/service|offer|provide|do you/.test(msg)) {
-      return `**Our Core Services:**\n\n1. **Engineering & Construction**\n2. **Energy & Electrical Solutions**\n3. **Water Systems & HDPE Piping**\n4. **Petroleum Supply**\n5. **Mining Support Services**\n6. **Logistics & Transportation**\n7. **Heavy Machinery Supply**\n\n*Which specific service are you interested in? You can click the service buttons above for more details.*`;
-    }
-
-    // Fallback response
-    const fallbacks = [
-      "I understand you're asking about our services. For detailed information, could you specify which service area you're interested in? Or contact us directly for immediate assistance.",
-      "That's a great question! For accurate information, please specify if you need details about engineering, energy, water systems, petroleum, mining support, or logistics services.",
-      "To best assist you, I recommend:\n1. Selecting a service category above\n2. Asking a specific question about our operations\n3. Contacting our team directly for personalized support"
-    ];
-    
-    return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    // Default
+    return "Thank you for your inquiry. For more specific information, please select a service category above or contact us directly:\n\nWhatsApp DRC: +243 972 329 000\nWhatsApp Zambia: +260 951 864 994\nEmail: info@dnmultiservices.com";
   };
 
   // Auto-scroll
@@ -453,15 +237,16 @@ To provide an accurate quote, we need:
         {
           id: '1',
           role: 'assistant',
-          content: "**Welcome back to DN Multi Services!**\n\nHow can I assist you with our cross-border industrial services today?",
+          content: "Hello! How can I help you with DN Multi Services today?",
           timestamp: new Date()
         }
       ]);
     }
   };
 
-  const openWhatsApp = (phone: string, message: string) => {
-    const encodedMessage = encodeURIComponent(`${message}\n\nSent via DN Multi Services website chatbot`);
+  const openWhatsApp = (phone: string) => {
+    const message = "Hello DN Multi Services, I need assistance with your services";
+    const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank', 'noopener,noreferrer');
   };
 
@@ -483,10 +268,10 @@ To provide an accurate quote, we need:
     setInput('');
     setIsLoading(true);
 
-    // Simulate API delay
+    // Simulate processing delay
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    // Get response from local knowledge base
+    // Get response from local knowledge
     const response = getLocalResponse(userMessage);
     
     const assistantMsg: Message = {
@@ -507,84 +292,60 @@ To provide an accurate quote, we need:
     }
   };
 
-  // Closed state - Floating button
+  // Single floating button (closed state)
   if (!isOpen) {
     return (
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-        {/* WhatsApp buttons */}
-        <div className="flex flex-col gap-2 animate-fade-in">
-          {whatsappContacts.map((contact, idx) => (
-            <button
-              key={idx}
-              onClick={() => openWhatsApp(contact.phone, contact.message)}
-              className="flex items-center gap-3 bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-slide-in-right"
-              style={{ animationDelay: `${idx * 100}ms` }}
-            >
-              <MessageCircle size={20} />
-              <div className="text-left">
-                <div className="font-bold text-sm">{contact.country}</div>
-                  <div className="text-xs opacity-90 flex items-center gap-1">
-                  <Phone size={12} />
-                  <span>WhatsApp</span>
-                </div>
-              </div>
-            </button>
-          ))}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="fixed bottom-6 right-6 z-50 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all duration-300 flex items-center justify-center"
+        aria-label="Open chat with DN Multi Services"
+      >
+        <div className="relative">
+          <MessageCircle size={24} />
+          <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
         </div>
-
-        {/* Main chatbot button */}
-        <button
-          onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3 group animate-bounce-subtle"
-        >
-          <div className="relative">
-            <Bot size={24} />
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-          </div>
-          <div className="text-left hidden sm:block">
-            <div className="font-bold text-sm">DN Assistant</div>
-            <div className="text-xs opacity-80">Ask about our services</div>
-          </div>
-        </button>
-      </div>
+      </button>
     );
   }
 
+  // Open state - Chat window
   return (
-    <div className="fixed bottom-6 right-6 w-full max-w-md h-[85vh] max-h-[700px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden animate-slide-up">
+    <div className="fixed inset-0 md:inset-auto md:bottom-6 md:right-6 md:w-96 md:h-[600px] z-50 flex flex-col bg-white md:rounded-lg md:shadow-xl md:border md:border-gray-200">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] p-4 text-white">
+      <div className="bg-blue-600 text-white p-4 flex-shrink-0">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="bg-white/20 p-2 rounded-lg">
+            <div className="bg-white/20 p-2 rounded">
               <Bot size={20} />
             </div>
             <div>
-              <h3 className="font-bold">DN Multi Services Assistant</h3>
-              <div className="flex items-center gap-2 text-xs opacity-90">
+              <h3 className="font-bold text-lg">DN Assistant</h3>
+              <div className="flex items-center gap-2 text-sm text-blue-100">
                 <div className="flex items-center gap-1">
-                  <MapPin size={10} />
-                  <span>DR Congo & Zambia</span>
+                  <Building size={12} />
+                  <span>Industrial Services</span>
                 </div>
                 <div className="w-1 h-1 bg-white/50 rounded-full"></div>
                 <div className="flex items-center gap-1">
-                  <Clock size={10} />
+                  <Shield size={12} />
                   <span>QHSE Certified</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <button
               onClick={clearChat}
-              className="p-2 hover:bg-white/10 rounded-lg transition"
+              className="p-2 hover:bg-white/10 rounded transition"
               title="Clear chat"
+              aria-label="Clear conversation"
             >
-              <Trash2 size={16} />
+              <Trash2 size={18} />
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-white/10 rounded-lg transition"
+              className="p-2 hover:bg-white/10 rounded transition"
+              aria-label="Close chat"
             >
               <X size={20} />
             </button>
@@ -593,40 +354,35 @@ To provide an accurate quote, we need:
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-50 to-white">
+      <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
         {messages.map((message) => (
           <div
             key={message.id}
             className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}
           >
-            <div className={`flex items-start gap-3 max-w-[90%] ${message.role === 'user' ? 'ml-auto' : ''}`}>
+            <div className={`flex items-start gap-3 max-w-full ${message.role === 'user' ? 'justify-end' : ''}`}>
               {message.role === 'assistant' && (
-                <div className="bg-gradient-to-br from-[#1185AE] to-[#BD2227] p-2 rounded-lg flex-shrink-0">
-                  <Bot size={14} className="text-white" />
+                <div className="bg-blue-100 p-2 rounded flex-shrink-0">
+                  <Bot size={16} className="text-blue-600" />
                 </div>
               )}
-              <div className={`flex-1 ${message.role === 'user' ? 'order-first' : ''}`}>
+              <div className={`max-w-[80%] ${message.role === 'user' ? 'order-first' : ''}`}>
                 <div
-                  className={`px-4 py-3 rounded-xl ${message.role === 'user'
-                      ? 'bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white rounded-br-none'
-                      : 'bg-gray-100 border border-gray-200 shadow-sm rounded-bl-none text-gray-800'
-                    }`}
+                  className={`px-4 py-3 rounded-lg ${
+                    message.role === 'user'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white border border-gray-200 text-gray-800'
+                  }`}
                 >
                   <div className="whitespace-pre-wrap text-sm">{message.content}</div>
                 </div>
-                <div className="text-xs text-gray-500 mt-1 px-2 flex items-center gap-2">
-                  <span>{format(message.timestamp, 'h:mm a')}</span>
-                  {message.role === 'assistant' && (
-                    <span className="flex items-center gap-1 text-[#1185AE]">
-                      <FileText size={10} />
-                      <span className="text-xs">Local AI</span>
-                    </span>
-                  )}
+                <div className="text-xs text-gray-500 mt-1 px-1">
+                  {format(message.timestamp, 'h:mm a')}
                 </div>
               </div>
               {message.role === 'user' && (
-                <div className="bg-gray-600 p-2 rounded-lg flex-shrink-0">
-                  <User size={14} className="text-white" />
+                <div className="bg-gray-600 p-2 rounded flex-shrink-0">
+                  <User size={16} className="text-white" />
                 </div>
               )}
             </div>
@@ -635,16 +391,16 @@ To provide an accurate quote, we need:
         
         {isLoading && (
           <div className="flex items-center gap-3 text-gray-600">
-            <div className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] p-2 rounded-lg">
+            <div className="bg-blue-600 p-2 rounded">
               <Bot size={16} className="text-white animate-pulse" />
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1">
               <div className="flex gap-1">
-                <div className="w-2 h-2 bg-[#1185AE] rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-[#1185AE] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-[#1185AE] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
-              <span className="text-sm text-gray-500">Processing your inquiry...</span>
+              <span className="text-sm text-gray-500">DN Assistant is typing...</span>
             </div>
           </div>
         )}
@@ -653,45 +409,47 @@ To provide an accurate quote, we need:
       </div>
 
       {/* Service Quick Links */}
-      <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+      <div className="border-t border-gray-200 bg-white p-3">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-sm font-medium text-gray-700">Quick Service Help:</p>
-          <HelpCircle size={14} className="text-gray-500" />
+          <p className="text-sm font-medium text-gray-700 flex items-center gap-1">
+            <HelpCircle size={14} />
+            Quick Help
+          </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {serviceCategories.map((category) => (
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          {serviceCategories.slice(0, 6).map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveService(activeService === category.name ? null : category.name)}
-              className={`text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition ${activeService === category.name
-                  ? 'bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white'
-                  : 'bg-white border border-gray-300 text-gray-700 hover:border-[#1185AE] hover:shadow-sm'
-                }`}
+              className={`text-xs px-2 py-2 rounded flex flex-col items-center gap-1 transition ${
+                activeService === category.name
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
             >
               {category.icon}
-              {category.name}
+              <span>{category.name}</span>
             </button>
           ))}
         </div>
 
         {/* Service-specific Questions */}
         {activeService && (
-          <div className="mt-3 pt-3 border-t border-gray-300">
+          <div className="border-t border-gray-300 pt-3">
             <p className="text-xs font-medium text-gray-600 mb-2">
-              Common questions about {activeService}:
+              About {activeService}:
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1">
               {serviceCategories
                 .find(s => s.name === activeService)
                 ?.questions.map((question, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleQuickQuestion(question)}
-                    className="text-xs bg-blue-50 hover:bg-blue-100 text-[#1185AE] px-3 py-1.5 rounded-lg transition flex items-center gap-1 disabled:opacity-50"
+                    className="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 px-2 py-1 rounded flex items-center gap-1"
                     disabled={isLoading}
                   >
-                    <span>{question}</span>
-                    <ChevronRight size={10} />
+                    <span className="truncate max-w-[120px]">{question}</span>
                   </button>
                 ))}
             </div>
@@ -699,60 +457,66 @@ To provide an accurate quote, we need:
         )}
       </div>
 
-      {/* WhatsApp Quick Contacts */}
-      <div className="px-4 py-3 border-t border-gray-200 bg-gradient-to-r from-green-50 to-blue-50">
-        <p className="text-sm font-medium text-gray-700 mb-2">Direct WhatsApp Contact:</p>
+      {/* WhatsApp Contacts */}
+      <div className="border-t border-gray-200 bg-gray-50 p-3">
+        <p className="text-sm font-medium text-gray-700 mb-2">Direct Contact:</p>
         <div className="grid grid-cols-2 gap-2">
           {whatsappContacts.map((contact, idx) => (
             <button
               key={idx}
-              onClick={() => openWhatsApp(contact.phone, contact.message)}
-              className="bg-gradient-to-r from-green-600 to-green-700 text-white text-sm py-2 px-3 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition hover:scale-[1.02]"
+              onClick={() => openWhatsApp(contact.phone)}
+              className={`${contact.color} text-white text-sm py-2 px-3 rounded flex items-center justify-center gap-2 hover:opacity-90 transition`}
             >
               <MessageCircle size={14} />
-              {contact.country}
+              <span>{contact.country}</span>
             </button>
           ))}
+        </div>
+        <div className="mt-2 flex justify-center">
+          <a
+            href="mailto:info@dnmultiservices.com"
+            className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
+          >
+            <Mail size={12} />
+            info@dnmultiservices.com
+          </a>
         </div>
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSubmit} className="border-t border-gray-300 p-4 bg-white">
+      <form onSubmit={handleSubmit} className="border-t border-gray-300 p-3 bg-white">
         <div className="flex gap-2">
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Ask about industrial services in DRC/Zambia..."
-            className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#1185AE] focus:border-transparent text-sm placeholder-gray-500"
+            placeholder="Type your message here..."
+            className="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             disabled={isLoading}
+            aria-label="Type your message"
           />
           
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white p-3 rounded-xl hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02]"
+            className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Send message"
           >
             <Send size={20} />
           </button>
         </div>
         
-        <div className="mt-3 text-xs text-gray-500 text-center">
-          <div className="flex flex-wrap items-center justify-center gap-3">
+        <div className="mt-2 text-xs text-gray-500 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-2">
             <span className="flex items-center gap-1">
               <Phone size={10} />
-              <a href="tel:+260770970511" className="hover:text-[#1185AE] hover:underline">Zambia: +260 770 970 511</a>
+              <span>24/7 Support Available</span>
             </span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full hidden sm:inline"></span>
-            <span className="flex items-center gap-1 hidden sm:flex">
-              <Mail size={10} />
-              <a href="mailto:dnmultiservicesupply@outlook.com" className="hover:text-[#1185AE] hover:underline">Email Us</a>
-            </span>
-            <span className="w-1 h-1 bg-gray-300 rounded-full hidden sm:inline"></span>
+            <span className="hidden sm:inline">•</span>
             <span className="flex items-center gap-1">
-              <AlertCircle size={10} />
-              <span>100% Free Service</span>
+              <CheckCircle size={10} />
+              <span>QHSE Certified</span>
             </span>
           </div>
         </div>
