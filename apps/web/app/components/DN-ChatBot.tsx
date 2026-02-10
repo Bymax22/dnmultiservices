@@ -360,7 +360,7 @@ export default function DNChatBot() {
   return (
     <div className="fixed inset-0 md:inset-auto md:bottom-6 md:right-6 md:w-96 md:h-[600px] z-50 flex flex-col glass-morphism border border-white/20 backdrop-blur-xl md:rounded-2xl shadow-2xl overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white p-4 flex-shrink-0">
+      <div className="bg-[#1185AE] text-white p-4 flex-shrink-0">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
@@ -410,7 +410,7 @@ export default function DNChatBot() {
           >
             <div className={`flex items-start gap-3 max-w-full ${message.role === 'user' ? 'justify-end' : ''}`}>
               {message.role === 'assistant' && (
-                <div className="bg-gradient-to-br from-[#1185AE] to-[#BD2227] p-2 rounded-lg flex-shrink-0 shadow-lg">
+                <div className="bg-[#1185AE] p-2 rounded-lg flex-shrink-0 shadow-lg">
                   <Bot size={16} className="text-white" />
                 </div>
               )}
@@ -418,8 +418,8 @@ export default function DNChatBot() {
                 <div
                   className={`px-4 py-3 rounded-2xl shadow-lg ${
                     message.role === 'user'
-                      ? 'bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white rounded-br-none'
-                      : 'bg-white/90 backdrop-blur-sm border border-white/30 text-gray-800 rounded-bl-none'
+                      ? 'bg-[#1185AE] text-white rounded-br-none'
+                      : 'bg-white text-gray-800 rounded-bl-none'
                   }`}
                 >
                   <div className="whitespace-pre-wrap text-sm">{message.content}</div>
@@ -431,7 +431,7 @@ export default function DNChatBot() {
                 </div>
               </div>
               {message.role === 'user' && (
-                <div className="bg-gradient-to-br from-gray-700 to-gray-900 p-2 rounded-lg flex-shrink-0 shadow-lg">
+                <div className="bg-gray-700 p-2 rounded-lg flex-shrink-0 shadow-lg">
                   <User size={16} className="text-white" />
                 </div>
               )}
@@ -440,8 +440,8 @@ export default function DNChatBot() {
         ))}
         
         {isLoading && (
-          <div className="flex items-center gap-3 text-gray-300 animate-fade-in">
-            <div className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] p-2 rounded-lg shadow-lg">
+          <div className="flex items-center gap-3 text-gray-400 animate-fade-in">
+            <div className="bg-[#1185AE] p-2 rounded-lg shadow-lg">
               <Bot size={16} className="text-white animate-pulse" />
             </div>
             <div className="flex flex-col gap-1">
@@ -474,7 +474,7 @@ export default function DNChatBot() {
               onClick={() => setActiveService(activeService === category.name ? null : category.name)}
               className={`text-xs px-2 py-2 rounded-xl flex flex-col items-center gap-1 transition-all duration-300 backdrop-blur-sm ${
                 activeService === category.name
-                  ? 'bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white shadow-lg scale-105'
+                  ? 'bg-[#1185AE] text-white shadow-lg scale-105'
                   : 'bg-white/20 text-white hover:bg-white/30 hover:shadow-md'
               }`}
             >
@@ -511,15 +511,15 @@ export default function DNChatBot() {
         )}
       </div>
 
-      {/* WhatsApp Contacts - Gradient background */}
-      <div className="border-t border-white/20 bg-gradient-to-r from-[#1185AE]/20 to-[#BD2227]/20 backdrop-blur-sm p-3">
+      {/* WhatsApp Contacts */}
+      <div className="border-t border-white/20 bg-white/5 backdrop-blur-sm p-3">
         <p className="text-sm font-medium text-white mb-2">Direct WhatsApp Contact:</p>
         <div className="grid grid-cols-2 gap-2 mb-2">
           {whatsappContacts.map((contact, idx) => (
             <button
               key={idx}
               onClick={() => openWhatsApp(contact.phone)}
-              className={`bg-gradient-to-r ${contact.color} text-white text-sm py-2 px-3 rounded-xl flex items-center justify-center gap-2 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm`}
+              className={`${idx === 0 ? 'bg-[#1185AE]' : 'bg-[#BD2227]'} text-white text-sm py-2 px-3 rounded-xl flex items-center justify-center gap-2 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm`}
             >
               <MessageCircle size={14} />
               <span className="font-medium">{contact.country}</span>
@@ -554,7 +554,7 @@ export default function DNChatBot() {
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-gradient-to-r from-[#1185AE] to-[#BD2227] text-white p-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+            className="bg-[#1185AE] text-white p-3 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
             aria-label="Send message"
           >
             <Send size={20} />

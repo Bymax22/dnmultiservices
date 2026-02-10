@@ -72,12 +72,12 @@ export default function Hero() {
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-1 sm:gap-2">
         {heroSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all ${index === currentSlide ? 'bg-[#1185AE] w-8' : 'bg-white/30'}`}
+            className={`rounded-full transition-all ${index === currentSlide ? 'bg-[#1185AE] w-4 sm:w-8 h-1.5 sm:h-2' : 'bg-white/30 w-1 sm:w-2 h-1 sm:h-2'}`}
           />
         ))}
       </div>
