@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Preloader from './components/Preloader';
+import DNChatBot from './components/DN-ChatBot'; // Add this import
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <Preloader />
         {children}
+        <DNChatBot /> {/* Add this line */}
       </body>
     </html>
   );

@@ -11,6 +11,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.26",
     "@cloudinary/react": "^1.14.1",
     "@cloudinary/url-gen": "^1.21.0",
     "@firebase/auth": "^1.10.0",
@@ -23,6 +24,7 @@
     "@react-three/fiber": "^9.1.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/howler": "^2.2.12",
+    "ai": "^6.0.78",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.3",
     "class-transformer": "^0.5.1",

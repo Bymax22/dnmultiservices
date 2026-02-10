@@ -1,4 +1,6 @@
-import { FiHome, FiBriefcase, FiPackage, FiTarget, FiInfo, FiShield, FiMail } from 'react-icons/fi';
+import { FiHome, FiBriefcase, FiPackage, FiTarget, FiInfo, FiShield, FiMail, FiTruck, FiZap, FiDroplet } from 'react-icons/fi';
+import { FaHardHat, FaOilCan } from 'react-icons/fa';
+import { GiMining } from 'react-icons/gi';
 
 export const heroSlides = [
   {
@@ -38,32 +40,32 @@ export const services = [
   {
     title: 'Mining Services & Supplies',
     description: 'Comprehensive mining support with high-quality supplies and expert technical assistance.',
-    icon: '⛏️',
+    icon: GiMining,
   },
   {
     title: 'Engineering & Construction',
     description: 'Professional engineering solutions and construction management for industrial projects.',
-    icon: '🏗️',
+    icon: FaHardHat,
   },
   {
     title: 'Transportation & Logistics',
     description: 'Efficient logistics and transportation services across DRC and Zambia.',
-    icon: '🚚',
+    icon: FiTruck,
   },
   {
     title: 'Energy & Electrical Solutions',
     description: 'Reliable energy systems and electrical infrastructure support.',
-    icon: '⚡',
+    icon: FiZap,
   },
   {
     title: 'Water & Infrastructure Systems',
     description: 'Sustainable water management and infrastructure development.',
-    icon: '💧',
+    icon: FiDroplet,
   },
   {
     title: 'Petroleum & Related Products',
     description: 'Quality petroleum products and supply chain management.',
-    icon: '🛢️',
+    icon: FaOilCan,
   },
 ];
 
