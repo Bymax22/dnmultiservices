@@ -629,12 +629,12 @@ export default function DNChatBot() {
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 flex-nowrap">
             {/* Language Selector */}
             <div className="relative">
               <button
                 onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm flex items-center gap-1.5 group"
+                className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm flex items-center gap-1.5 group flex-shrink-0"
                 title={selectedLanguage === 'en' ? 'Change language' : 
                        selectedLanguage === 'fr' ? 'Changer de langue' : 
                        'Badilisha lugha'}
@@ -644,7 +644,7 @@ export default function DNChatBot() {
               </button>
               
               {showLanguageMenu && (
-                <div className="absolute bottom-full right-0 mb-2 bg-white/95 backdrop-blur-md border border-white/30 rounded-lg shadow-xl overflow-hidden z-50 min-w-[180px] animate-slide-down">
+                <div className="absolute top-full right-0 mt-2 bg-white/95 backdrop-blur-md border border-white/30 rounded-lg shadow-xl overflow-hidden z-50 min-w-[180px] animate-slide-down">
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
@@ -667,7 +667,7 @@ export default function DNChatBot() {
             
             <button
               onClick={clearChat}
-              className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm"
+              className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm flex-shrink-0 hidden sm:flex"
               title={selectedLanguage === 'en' ? 'Clear chat' : 
                      selectedLanguage === 'fr' ? 'Effacer la discussion' : 
                      'Futa mazungumzo'}
@@ -676,7 +676,7 @@ export default function DNChatBot() {
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm"
+              className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm flex-shrink-0"
               aria-label="Close chat"
             >
               <X size={20} />
