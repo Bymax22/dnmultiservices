@@ -634,27 +634,31 @@ export default function DNChatBot() {
             <div className="relative">
               <button
                 onClick={() => setShowLanguageMenu(!showLanguageMenu)}
-                className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm flex items-center gap-1"
+                className="p-2 hover:bg-white/10 rounded-lg transition backdrop-blur-sm flex items-center gap-1.5 group"
                 title={selectedLanguage === 'en' ? 'Change language' : 
                        selectedLanguage === 'fr' ? 'Changer de langue' : 
                        'Badilisha lugha'}
               >
-                <Languages size={16} />
-                <span className="text-xs">{languages.find(l => l.code === selectedLanguage)?.flag}</span>
+                <Languages size={20} className="group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-medium">{languages.find(l => l.code === selectedLanguage)?.flag}</span>
               </button>
               
               {showLanguageMenu && (
-                <div className="absolute bottom-full right-0 mb-2 bg-white/90 backdrop-blur-sm border border-white/20 rounded-lg shadow-lg overflow-hidden z-50">
+                <div className="absolute bottom-full right-0 mb-2 bg-white/95 backdrop-blur-md border border-white/30 rounded-lg shadow-xl overflow-hidden z-50 min-w-[180px] animate-slide-down">
                   {languages.map((lang) => (
                     <button
                       key={lang.code}
-                      onClick={() => changeLanguage(lang.code)}
-                      className={`flex items-center gap-2 px-3 py-2 text-sm w-full hover:bg-[#1185AE]/20 transition ${
-                        selectedLanguage === lang.code ? 'bg-[#1185AE]/30' : 'text-gray-800'
+                      onClick={() => {
+                        changeLanguage(lang.code);
+                        setShowLanguageMenu(false);
+                      }}
+                      className={`flex items-center gap-3 px-4 py-3 text-sm w-full hover:bg-[#1185AE]/15 transition ${
+                        selectedLanguage === lang.code ? 'bg-[#1185AE] text-white' : 'text-gray-800 hover:text-gray-900'
                       }`}
                     >
-                      {lang.icon}
-                      <span>{lang.flag} {lang.name}</span>
+                      <span className="text-lg">{lang.flag}</span>
+                      <span className="font-medium">{lang.name}</span>
+                      {selectedLanguage === lang.code && <CheckCircle size={16} className="ml-auto" />}
                     </button>
                   ))}
                 </div>
