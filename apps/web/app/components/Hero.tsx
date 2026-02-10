@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { heroSlides } from '../lib/constants';
+import { Building, Zap, Droplets, Fuel, Pickaxe, Truck } from 'lucide-react';
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slideIcons = [Building, Zap, Zap, Zap, Building, Building];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -71,15 +74,25 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-1 sm:gap-2">
-        {heroSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`rounded-full transition-all ${index === currentSlide ? 'bg-[#1185AE] w-4 sm:w-8 h-1.5 sm:h-2' : 'bg-white/30 w-1 sm:w-2 h-1 sm:h-2'}`}
-          />
-        ))}
+      {/* Slide Indicators with Icons */}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 sm:gap-3">
+        {heroSlides.map((_, index) => {
+          const IconComponent = slideIcons[index];
+          return (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`p-1.5 sm:p-2 rounded-lg transition-all duration-300 ${
+                index === currentSlide
+                  ? 'bg-[#1185AE] text-white shadow-lg scale-110'
+                  : 'bg-white/20 text-white/60 hover:bg-white/30 hover:text-white'
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            >
+              <IconComponent size={16} className="sm:w-5 sm:h-5" />
+            </button>
+          );
+        })}
       </div>
 
       {/* Scroll Indicator */}

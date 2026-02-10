@@ -145,7 +145,7 @@ export default function Header() {
                   className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-[#1185AE] transition-colors"
                 >
                   <FiPhone size={18} />
-                  <span className="text-sm">+260 123 456 789</span>
+                  <span className="text-sm">+260 951 864 994</span>
                 </a>
               </div>
               
