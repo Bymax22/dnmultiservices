@@ -138,7 +138,7 @@ export default function Header() {
                   className="flex items-center gap-3 px-4 py-2 text-slate-300 hover:text-[#1185AE] transition-colors"
                 >
                   <FiMail size={18} />
-                  <span className="text-sm">dnmultiservicesupply@outlook.com</span>
+                  <span className="text-sm">info@dnmultiservices.com</span>
                 </a>
                 <a 
                   href="tel:+260123456789"
